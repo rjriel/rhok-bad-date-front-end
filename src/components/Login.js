@@ -8,11 +8,11 @@ const buttonStyle = {
 };
 
 const contactStyle = {
-  float:'left',
-  margin:0,
-  marginLeft:10,
-  marginTop:-10
-}
+  float: 'left',
+  margin: 0,
+  marginLeft: 10,
+  marginTop: -10,
+};
 
 class Login extends Component {
   state = {

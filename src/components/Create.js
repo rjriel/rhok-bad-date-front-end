@@ -51,14 +51,30 @@ const types = [
   'Other',
 ];
 
+const times = [
+  { display: '12am-6am', value: 0 },
+  { display: '6am-12noon', value: 6 },
+  { display: '12noon-6pm', value: 12 },
+  { display: '6pm-12am', value: 18 },
+];
+
+const initialDate = new Date();
+initialDate.setHours(0);
+initialDate.setMinutes(0);
+initialDate.setSeconds(0);
+initialDate.setMilliseconds(0);
 
 class Create extends Component {
   state = {
     currentView: 0,
+    dateTime: {
+      date: initialDate,
+      time: 0,
+    },
     incident: {
       submitter_id: '', // user id
       updated: false,
-      incident_date: null, // date from calendar, timestamp from dropdown
+      incidentDate: initialDate, // date from calendar, timestamp from dropdown
       incidentType: [], // incident_type
       incident_descriptor: [],
       car: {
@@ -120,13 +136,36 @@ class Create extends Component {
   };
 
   incidentUpdate = (field, value) => {
-    console.log(field, value);
-    this.setState({
-      incident: {
-        ...this.state.incident,
-        [field]: value,
-      },
-    });
+    if (field === 'date' || field === 'time') {
+      let currentField = field;
+      let currentValue = value;
+      const { incidentDate } = this.state.incident;
+      currentField = 'incidentDate';
+      if (field === 'date') {
+        currentValue.setHours(incidentDate.getHours());
+      } else {
+        currentValue = new Date(incidentDate);
+        currentValue.setHours(value);
+      }
+
+      this.setState({
+        incident: {
+          ...this.state.incident,
+          [currentField]: currentValue,
+        },
+        dateTime: {
+          ...this.state.dateTime,
+          [field]: value,
+        },
+      });
+    } else {
+      this.setState({
+        incident: {
+          ...this.state.incident,
+          [field]: value,
+        },
+      });
+    }
   };
 
   renderIncidentType = () => {
@@ -160,10 +199,38 @@ class Create extends Component {
     ));
   }
 
+  renderIncidentTimes = () => {
+    return times.map(time => (
+      <MenuItem
+        key={time.display}
+        insetChildren
+        value={time.value}
+        primaryText={time.display}
+      />
+    ));
+  }
+
   renderIncidentDateTime = () => {
-    const { currentView } = this.state;
+    const { currentView, incident: { incidentDate }, dateTime } = this.state;
     if (currentView !== incidentViews.DATETIME) return null;
-    return currentView === incidentViews.DATETIME && <div id="datetime">Date and time</div>;
+    return (
+      <div id="datetime">
+        <div>When did this incident occur?</div>
+        <DatePicker
+          style={{ color: '#fff !important' }}
+          hintText="Date"
+          value={incidentDate}
+          onChange={(event, value) => { this.incidentUpdate('date', value); }}
+        />
+        <SelectField
+          hintText="Time"
+          value={dateTime.time}
+          onChange={(event, index, values) => { this.incidentUpdate('time', values); }}
+        >
+          {this.renderIncidentTimes(dateTime.time)}
+        </SelectField>
+      </div>
+    );
   };
 
   renderIncidentLocation = () => {
