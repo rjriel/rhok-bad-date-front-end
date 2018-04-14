@@ -5,4 +5,14 @@ const views = {
   RESOURCES: 3,
 };
 
-export { views };
+const incidentViews = {
+  TYPE: 0,
+  DATETIME: 1,
+  LOCATION: 2,
+  OFFENDER: 3,
+  VEHICLE: 4,
+  OTHER: 5,
+  SUCCESS: 6,
+};
+
+export { views, incidentViews };
