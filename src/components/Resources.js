@@ -26,10 +26,8 @@ const Resources = () => {
       </p>
       <br/>
       <h4>Brigid's Place</h4>
-      <p><FontIcon className="material-icons" style={{ float: 'left' }}>phone</FontIcon>
+      <p><FontIcon className="material-icons" style={{ float: 'left' }}>phone</FontIcon></p>
       <p style={contactStyle}>613-688-2017</p>
-      </p>
-
     </div>
   );
 };

@@ -7,6 +7,9 @@ import {
   DropDownMenu,
   MenuItem,
   SelectField,
+  Checkbox,
+  CircularProgress,
+  FontIcon
 } from 'material-ui';
 import { incidentViews } from './helpers';
 
@@ -20,6 +23,12 @@ const containerStyle = {
 
 const stepContainerStyles = {
   margin: '10px 10px 60px',
+};
+
+const columnStyle = {
+  maxWidth: '45%',
+  float: 'left',
+  margin: '5px'
 };
 
 const buttonStyles = {
@@ -171,27 +180,135 @@ class Create extends Component {
   };
 
   renderIncidentOffender = () => {
-    const { currentView } = this.state;
+    const { currentView, incident: { offender } } = this.state;
     if (currentView !== incidentViews.OFFENDER) return null;
-    return currentView === incidentViews.OFFENDER && <div id="offender">Offender</div>;
+    return currentView === incidentViews.OFFENDER &&
+      <div id="offender">
+        <p style={{textAlign: 'center'}}>Who was the aggressor?</p>
+        <div style={columnStyle}>
+          <TextField
+            hintText="Enter age"
+            floatingLabelText="Age"
+            fullWidth
+            value={offender.age}
+          />
+          <TextField
+            hintText="Enter height"
+            floatingLabelText="Height"
+            fullWidth
+            value={offender.height}
+          />
+          <TextField
+            hintText="Enter weight"
+            floatingLabelText="Weight"
+            fullWidth
+            value={offender.weight}
+          />
+          <TextField
+            hintText="Enter build"
+            floatingLabelText="Build"
+            fullWidth
+            value={offender.build}
+          />
+        </div>
+        <div style={columnStyle}>
+          <TextField
+            hintText="Enter hair colour"
+            floatingLabelText="Hair colour"
+            fullWidth
+            value={offender.hair_colour}
+          />
+          <TextField
+            hintText="Enter facial hair"
+            floatingLabelText="Facial hair"
+            fullWidth
+            value={offender.facial_hair}
+          />
+          <TextField
+            hintText="Enter race/skin colour"
+            floatingLabelText="Race/Skin colour"
+            fullWidth
+            value={offender.skin_colour}
+          />
+          <TextField
+            hintText="Tattoos"
+            floatingLabelText="Tattoos"
+            fullWidth
+            value={offender.tattoos}
+          />
+        </div>
+      </div>;
   };
 
   renderIncidentVehicle = () => {
-    const { currentView } = this.state;
+    const { currentView, incident: { car }  } = this.state;
     if (currentView !== incidentViews.VEHICLE) return null;
-    return currentView === incidentViews.VEHICLE && <div id="vehicle">Vehicle</div>;
+    return currentView === incidentViews.VEHICLE && 
+    <div id="vehicle" style={{textAlign: 'center'}}>
+    <p style={{marginBottom: -10}}>What were they driving?</p>
+    <div>
+      <TextField
+        hintText="Enter make"
+        floatingLabelText="Make"
+        value={car.make}
+      />
+      <TextField
+        hintText="Enter model"
+        floatingLabelText="Model"
+        value={car.model}
+      />
+      <TextField
+        hintText="Enter type"
+        floatingLabelText="Type"
+        value={car.type}
+      />
+      <TextField
+        hintText="Enter plate number"
+        floatingLabelText="Plate number"
+        value={car.plate_number}
+      />
+      <TextField
+        hintText="Enter plate province"
+        floatingLabelText="Plate province"
+        value={car.plate_province}
+      />
+    </div>
+  </div>;
   };
 
   renderIncidentOther = () => {
-    const { currentView } = this.state;
+    const { currentView, incident: { extra_details } } = this.state;
     if (currentView !== incidentViews.OTHER) return null;
-    return currentView === incidentViews.OTHER && <div id="other">Other Notes</div>;
+    return currentView === incidentViews.OTHER &&
+      <div id="other">
+        <p>Anything else?</p>
+        <TextField
+          hintText="Other details"
+          floatingLabelText="Other details"
+          multiLine={true}
+          rows={4}
+          value={extra_details}
+        />
+        <Checkbox
+          label="Do you want to us to contact you?"
+          style={{ marginTop: 20 }}
+        />
+        <div id="spinner" style={{ marginTop: 20, textAlign: 'center' }}>
+          <CircularProgress />
+        </div>
+      </div>;
   };
 
   renderSuccess = () => {
     const { currentView } = this.state;
     if (currentView !== incidentViews.SUCCESS) return null;
-    return currentView === incidentViews.SUCCESS && <div id="success">Successfully Reported</div>;
+    return currentView === incidentViews.SUCCESS && 
+    <div id="success" style={{textAlign: 'center'}}>
+      Successfully Reported
+      <br/>
+      <FontIcon className="material-icons" style={{ margin: 10, fontSize: 72, width: 72, color: 'green' }}>check circle</FontIcon>
+      <p>Thank you for helping make our community safer.</p>
+    </div>;
   };
 
   render() {
@@ -203,13 +320,13 @@ class Create extends Component {
         <div>Step {currentView + 1} of {totalSteps}</div>
 
         <div style={stepContainerStyles}>
-          { this.renderIncidentType() }
-          { this.renderIncidentDateTime() }
-          { this.renderIncidentLocation() }
-          { this.renderIncidentOffender() }
-          { this.renderIncidentVehicle() }
-          { this.renderIncidentOther() }
-          { this.renderSuccess() }
+          {this.renderIncidentType()}
+          {this.renderIncidentDateTime()}
+          {this.renderIncidentLocation()}
+          {this.renderIncidentOffender()}
+          {this.renderIncidentVehicle()}
+          {this.renderIncidentOther()}
+          {this.renderSuccess()}
         </div>
 
         <div style={buttonStyles}>
