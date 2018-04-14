@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { TextField, Button } from 'material-ui';
-import Splash from './Splash';
+import Login from './Login';
+import List from './List';
+import Resources from './Resources';
 
+const views = {
+  LIST: 'LIST',
+  CREATE: 'CREATE',
+  RESOURCES: 'RESOURCES',
+  LOGIN: 'LOGIN',
+};
 
 class App extends Component {
   state = {
+    currentView: views.LOGIN,
     user: null,
   };
 
@@ -14,24 +22,21 @@ class App extends Component {
     // make api call
     this.setState({
       user: { id: '123124234234' },
+      currentView: views.LIST,
     });
   };
 
   render() {
+    const { currentView, user } = this.state;
     return (
       <div>
-        {
-          !this.state.user &&
-          <Splash
+        { currentView === views.LIST && <List user={user} /> }
+        { currentView === views.LOGIN &&
+          <Login
             loginCB={this.loginSignup}
           />
-        }{
-          this.state.user &&
-          <div>
-            <div>show the list</div>
-            <button >REport and incident</button>
-          </div>
         }
+        { currentView === views.RESOURCES && <Resources />}
       </div>
     );
   }
