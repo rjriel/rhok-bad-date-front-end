@@ -9,7 +9,9 @@ class App extends Component {
 
   render() {
     return (
-      <AppContainer id="app" />
+      <AppContainer id="app">
+        Ottawa Bad Date List
+      </AppContainer>
     );
   }
 }
