@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Button } from 'material-ui';
+import { TextField, RaisedButton } from 'material-ui';
 
-class Splash extends Component {
+const buttonStyle = {
+  margin: 12,
+};
+
+class Login extends Component {
   state = {
     username: '',
     password: '',
@@ -30,24 +34,23 @@ class Splash extends Component {
             onChange={(event) => { this.setState({ password: event.target.value }); }}
           />
         </div>
-        <Button
-          variant="raised"
+        <RaisedButton
+          primary
           onClick={() => this.props.loginCB({ username, password })}
-        >
-          Log in/Sign up
-        </Button>
+          style={buttonStyle}
+          label="Log in/Sign up"
+        />
       </div>
     );
   }
 }
-  
 
-Splash.defaultProps = {
+Login.defaultProps = {
   loginCB: () => {},
 };
 
-Splash.propTypes = {
+Login.propTypes = {
   loginCB: PropTypes.func,
 };
 
-export default Splash;
+export default Login;

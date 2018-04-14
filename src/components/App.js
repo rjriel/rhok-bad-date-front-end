@@ -1,21 +1,41 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+
+
 import Login from './Login';
 import List from './List';
 import Resources from './Resources';
+import Create from './Create';
+import BottomNav from './BottomNav';
 
-const views = {
-  LIST: 'LIST',
-  CREATE: 'CREATE',
-  RESOURCES: 'RESOURCES',
-  LOGIN: 'LOGIN',
+import { views } from './helpers';
+
+
+const appStyles = {
+  boxSizing: 'border-box',
+  margin: 0,
+  padding: 0,
 };
+
+const containerStyles = {
+  display: 'flex',
+  flexDirection: 'colum',
+  alignItems: 'center',
+  height: '100%',
+  justifyContent: 'center',
+}
 
 class App extends Component {
   state = {
-    currentView: views.LOGIN,
+    currentView: views.HOME,
     user: null,
   };
+
+  setView = (index) => {
+    this.setState({
+      currentView: index,
+    });
+  }
 
   loginSignup = ({ username, password }) => {
     console.log(username, password);
@@ -29,14 +49,18 @@ class App extends Component {
   render() {
     const { currentView, user } = this.state;
     return (
-      <div>
-        { currentView === views.LIST && <List user={user} /> }
-        { currentView === views.LOGIN &&
-          <Login
-            loginCB={this.loginSignup}
-          />
-        }
-        { currentView === views.RESOURCES && <Resources />}
+      <div style={appStyles} >
+        <div style={containerStyles}>
+          { currentView === views.HOME &&
+            <Login
+              loginCB={this.loginSignup}
+            />
+          }
+          { currentView === views.CREATE && <Create /> }
+          { currentView === views.LIST && <List user={user} /> }
+          { currentView === views.RESOURCES && <Resources />}
+        </div>
+        <BottomNav currentView={currentView} viewSelector={this.setView} />
       </div>
     );
   }
