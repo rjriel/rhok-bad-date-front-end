@@ -23,7 +23,7 @@ const containerStyles = {
   alignItems: 'center',
   height: '100%',
   justifyContent: 'center',
-}
+};
 
 class App extends Component {
   state = {
