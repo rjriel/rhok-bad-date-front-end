@@ -28,11 +28,14 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^2.30.1",
     "image-webpack-loader": "^3.4.2",
+    "pwa-manifest-webpack-plugin": "^1.0.5",
     "style-loader": "^0.19.1",
     "svg-react-loader": "^0.4.5",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1"
+    "webpack-dev-server": "^2.11.1",
+    "workbox-cli": "^3.0.1",
+    "workbox-webpack-plugin": "^3.1.0"
   },
   "dependencies": {
     "axios": "^0.17.1",

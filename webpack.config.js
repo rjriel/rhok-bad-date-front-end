@@ -2,6 +2,10 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const PwaManifestWebpackPlugin = require('pwa-manifest-webpack-plugin');
+
+const WorkboxPlugin = require('workbox-webpack-plugin');
+
 const VENDOR_LIBS = [
   'prop-types', 'react', 'react-dom', 'react-router-dom',
   'react-transition-group', 'styled-components',
@@ -49,6 +53,14 @@ const config = {
     ],
   },
   plugins: [
+    new PwaManifestWebpackPlugin({
+      name: 'Todos',
+      description: 'a todo demo of pwa',
+      icon: {
+        src: path.resolve('src/images/umbrella.png'),
+        sizes: [36, 48, 96, 120],
+      },
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'manifest'],
     }),
@@ -58,6 +70,7 @@ const config = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
+    new WorkboxPlugin.GenerateSW(),
   ],
 
 };
