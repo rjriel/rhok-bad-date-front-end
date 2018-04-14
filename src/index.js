@@ -12,7 +12,7 @@ import App from './components/App';
 /* eslint-disable */
 injectGlobal`
   body {
-    color: #DDD;
+    color: #fff;
     background-color: #333;
     font-family: 'Open Sans', sans-serif;
     margin: 0;
