@@ -1,0 +1,13 @@
+{
+   "index": "index.html",
+   "region": "ca-central-1",
+   "uploadDir": "dist",
+   "prefix": "",
+   "exclude": [],
+   "corsConfiguration": [],
+   "enableCloudfront": false,
+   "retries": 20,
+   "domain": "yourdomain.com",
+   "configFile": ".s3-website.json",
+   "cert": "-a"
+}
