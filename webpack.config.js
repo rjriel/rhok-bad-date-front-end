@@ -3,8 +3,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const PwaManifestWebpackPlugin = require('pwa-manifest-webpack-plugin');
-
-const WorkboxPlugin = require('workbox-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 const VENDOR_LIBS = [
   'prop-types', 'react', 'react-dom', 'react-router-dom',
@@ -54,12 +54,12 @@ const config = {
   },
   plugins: [
     new PwaManifestWebpackPlugin({
-      name: "OBDL",
-      description: "Ottawa Bad Date List",
-      short_name: "OBDL",
-      start_url: "./index.html",
-      background_color: "#ffffff",
-      theme_color: "#000000",
+      name: 'OBDL',
+      description: 'Ottawa Bad Date List',
+      short_name: 'OBDL',
+      start_url: './index.html',
+      background_color: '#000000',
+      theme_color: '#000000',
       icon: {
         src: path.resolve('src/images/umbrella.png'),
         sizes: [36, 48, 96, 120],
@@ -74,7 +74,12 @@ const config = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
-    new WorkboxPlugin.GenerateSW(),
+    new InjectManifest({
+      swSrc: './src/sw.js',
+    }),
+    new CopyWebpackPlugin([
+      { from: 'src/images', to: 'images' },
+    ]),
   ],
 
 };
