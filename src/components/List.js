@@ -127,7 +127,7 @@ class List extends Component {
 
     this.state = {
       searchTerm: '',
-      checked: true,
+      checked: false,
       basicIncidents: [],
       fullIncidents: [],
     };
@@ -149,6 +149,7 @@ class List extends Component {
     const { checked } = this.state;
     const { username, id } = user;
     const publicProp = !checked ? '/public' : '';
+    console.log('GET SUMMARIES', publicProp);
     axios.get(`https://a7v59dsb4l.execute-api.ca-central-1.amazonaws.com/UAT/incident${publicProp}?username=${username}&authorization=${id}`)
       .then(({ data }) => {
         if (checked) {
@@ -187,7 +188,6 @@ class List extends Component {
   renderBasicIncidents = () => {
     console.log(this.state.basicIncidents);
     const filtered = this.state.basicIncidents.filter((incident) => {
-
       return JSON.stringify(incident).includes(this.state.searchTerm);
     });
     return filtered.map((incident) => {
