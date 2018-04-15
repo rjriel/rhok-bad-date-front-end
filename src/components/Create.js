@@ -284,24 +284,28 @@ class Create extends Component {
             floatingLabelText="Age"
             fullWidth
             value={offender.age}
+            onChange={(event, value) => { this.incidentOffenderUpdate('age', value); }}
           />
           <TextField
             hintText="Enter height"
             floatingLabelText="Height"
             fullWidth
             value={offender.height}
+            onChange={(event, value) => { this.incidentOffenderUpdate('height', value); }}
           />
           <TextField
             hintText="Enter weight"
             floatingLabelText="Weight"
             fullWidth
             value={offender.weight}
+            onChange={(event, value) => { this.incidentOffenderUpdate('weight', value); }}
           />
           <TextField
             hintText="Enter build"
             floatingLabelText="Build"
             fullWidth
             value={offender.build}
+            onChange={(event, value) => { this.incidentOffenderUpdate('build', value); }}
           />
         </div>
         <div style={columnStyle}>
@@ -310,24 +314,28 @@ class Create extends Component {
             floatingLabelText="Hair colour"
             fullWidth
             value={offender.hair_colour}
+            onChange={(event, value) => { this.incidentOffenderUpdate('hair_colour', value); }}
           />
           <TextField
             hintText="Enter facial hair"
             floatingLabelText="Facial hair"
             fullWidth
             value={offender.facial_hair}
+            onChange={(event, value) => { this.incidentOffenderUpdate('facial_hair', value); }}
           />
           <TextField
-            hintText="Enter race/skin colour"
+            hintText="Enter skin colour"
             floatingLabelText="Race/Skin colour"
             fullWidth
             value={offender.skin_colour}
+            onChange={(event, value) => { this.incidentOffenderUpdate('skin_colour', value); }}
           />
           <TextField
             hintText="Tattoos"
             floatingLabelText="Tattoos"
             fullWidth
             value={offender.tattoos}
+            onChange={(event, value) => { this.incidentOffenderUpdate('tattoos', value); }}
           />
         </div>
       </div>;

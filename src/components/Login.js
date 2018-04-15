@@ -50,8 +50,11 @@ class Login extends Component {
         />
         <div style={{ marginTop: 50 }}>
           <p><a href="tel:16135622333"><FontIcon className="material-icons" style={{ float: 'left' }}>phone</FontIcon></a></p>
-          <p style={contactStyle}>Need counselling support?
-          <br />Call the Crisis Line.</p>
+          <p style={contactStyle}>
+            Need counselling support?
+            <br />
+            Call the Crisis Line.
+          </p>
         </div>
       </div>
     );
