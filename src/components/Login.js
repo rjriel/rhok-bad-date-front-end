@@ -14,6 +14,7 @@ const linkStyle = {
 
 const contactStyle = {
   float: 'left',
+  textAlign: 'left',
   margin: 0,
   marginLeft: 10,
   marginTop: -10,
@@ -21,9 +22,24 @@ const contactStyle = {
 
 const contactStyle2 = {
   float: 'left',
+  textAlign: 'left',
   margin: 0,
   marginLeft: 35,
   marginTop: -25,
+}
+
+const containerStyles = {
+  textAlign: 'center',
+};
+
+const logoutStyles = {
+  marginBottom: '30px',
+};
+
+const errorStyles = {
+  color: '#f36868',
+  textAlign: 'center',
+  marginBottom: '20px',
 };
 
 class Login extends Component {
@@ -32,12 +48,45 @@ class Login extends Component {
     password: '',
   };
 
-  render() {
-    const { username, password } = this.state;
-    const { loginCB, signupCB } = this.props;
+  renderErrorMessage = () => {
+    const { errorMessage } = this.props;
+    if (errorMessage) {
+      return (
+        <div style={errorStyles}>{errorMessage}</div>
+      );
+    }
+    return null;
+  }
+
+  renderLogOut = () => {
+    const { user, logoutCB } = this.props;
+    if (!user || !user.id) return null;
+
     return (
       <div>
-        <h1>Ottawa Bad Date List</h1>
+        <div style={logoutStyles}>
+          {`Hi ${user.username}, you're currently logged in.`}
+        </div>
+        <div>
+          <RaisedButton
+            secondary
+            onClick={() => logoutCB()}
+            style={buttonStyle}
+            label="Log Out"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  renderLogIn = () => {
+    const { loginCB, signupCB, user } = this.props;
+    if (user && user.id) return null;
+
+    const { username, password } = this.state;
+    return (
+      <div>
+        { this.renderErrorMessage() }
         <div>
           <TextField
             id="username"
@@ -86,16 +135,32 @@ class Login extends Component {
       </div>
     );
   }
+
+  render() {
+    return (
+      <div style={containerStyles}>
+        <h1>Ottawa Bad Date List</h1>
+        { this.renderLogIn() }
+        { this.renderLogOut() }
+      </div>
+    );
+  }
 }
 
 Login.defaultProps = {
   loginCB: () => { },
   signupCB: () => {},
+  logoutCB: () => {},
+  errorMessage: '',
+  user: null,
 };
 
 Login.propTypes = {
   loginCB: PropTypes.func,
   signupCB: PropTypes.func,
+  logoutCB: PropTypes.func,
+  errorMessage: PropTypes.string,
+  user: PropTypes.objectOf(PropTypes.any),
 };
 
 export default Login;

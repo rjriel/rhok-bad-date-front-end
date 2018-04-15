@@ -30,23 +30,24 @@ const containerStyles = {
 class App extends Component {
   state = {
     currentView: views.HOME,
+    errorMessage: '',
     user: null,
   };
 
   componentDidMount() {
     // Detects if device is on iOS
-    const isIos = () => {
-      const userAgent = window.navigator.userAgent.toLowerCase();
-      return /iphone|ipad|ipod/.test(userAgent);
-    };
-    // Detects if device is in standalone mode
-    const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+    // const isIos = () => {
+    //   const userAgent = window.navigator.userAgent.toLowerCase();
+    //   return /iphone|ipad|ipod/.test(userAgent);
+    // };
+    // // Detects if device is in standalone mode
+    // const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
 
     // Checks if should display install popup notification:
-    if (isIos() && !isInStandaloneMode()) {
-      console.log('I\'m an iphone');
-      this.setState({ showInstallMessage: true });
-    }
+    // if (isIos() && !isInStandaloneMode()) {
+    //   console.log('I\'m an iphone');
+    //   this.setState({ showInstallMessage: true });
+    // }
   }
 
   setView = (index) => {
@@ -55,40 +56,64 @@ class App extends Component {
     });
   }
 
-  logIn = ({ username, password }) => {
-    console.log(username, password);
-    // make api call
+  clearErrorMessage = () => {
     this.setState({
-      user: { id: '123124234234' },
-      currentView: views.LIST,
+      errorMessage: '',
+    });
+  }
+
+  logIn = ({ username, password }) => {
+    this.clearErrorMessage();
+    console.log('LOG IN', username, password);
+    // make api call
+
+    return axios.post(
+      'https://a7v59dsb4l.execute-api.ca-central-1.amazonaws.com/UAT/login',
+      { name: username, password },
+    ).then(({ data }) => {
+      this.setState({
+        user: {
+          username,
+          id: data,
+        },
+        errorMessage: !data ? 'Invalid username and password' : '',
+      });
     });
   };
 
   signUp = ({ username, password }) => {
-    console.log('SIGN UP', username, password);
+    this.clearErrorMessage();
     // make api call
-    axios({
-      method: 'POST',
-      url: 'https://a7v59dsb4l.execute-api.ca-central-1.amazonaws.com/UAT/register',
-      data: { name: username, password },
-      headers: {
-        'Content-Type': 'application/jpson',
-        Host: 'a7v59dsb4l.execute-api.ca-central-1.amazonaws.com',
-        Authorization: 'AWS4-HMAC-SHA256 Credential=AKIAJZRMQLOVDPDO7B5Q/20180415/ca-central-1/execute-api/aws4_request, SignedHeaders=content-length;content-type;host;x-amz-date, Signature=c470b67234a9269365f9d89c160e1f6eb26dae018a16b39dc75c2415eaf6f1b2',
-      },
-      json: true,
-    }).then((response) => { console.log('RESPONSE', response.data); });
-    // this.setState({
-    //   user: { id: '123124234234' },
-    //   currentView: views.LIST,
-    // });
+    return axios.post(
+      'https://a7v59dsb4l.execute-api.ca-central-1.amazonaws.com/UAT/register',
+      { name: username, password },
+    ).then(({ data: { success, message } }) => {
+      if (success) {
+        return this.logIn({ username, password });
+      }
+      this.setState({
+        errorMessage: message,
+      });
+
+      return null;
+    }).catch(error => console.error('CATCH', error));
   };
 
+  logout = () => {
+    this.setState({
+      user: null,
+    });
+  }
+
   renderLogin = () => {
+    const { user, errorMessage } = this.state;
     return (
       <Login
+        user={user}
+        errorMessage={errorMessage}
         signupCB={this.signUp}
         loginCB={this.logIn}
+        logoutCB={this.logout}
       />
     );
   };
@@ -109,7 +134,7 @@ class App extends Component {
           { currentView === views.LIST && <List user={user} /> }
           { currentView === views.RESOURCES && <Resources />}
         </div>
-        <BottomNav currentView={currentView} viewSelector={this.setView} />
+        <BottomNav currentView={currentView} viewSelector={this.setView} loggedIn={!!user} />
       </div>
     );
   }
