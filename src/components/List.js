@@ -11,6 +11,11 @@ const listStyle = {
   justifyContent: 'start',
 };
 
+const incidentResultStyle = {
+  overflow: 'auto',
+  height: '600px',
+};
+
 const horizontalRuleStyle = {
   marginTop: '30px',
 };
@@ -41,12 +46,88 @@ class List extends Component {
     this.state = {
       searchTerm: '',
       checked: false,
-      incidentSummaries: [{ name: 'harry' }, { name: 'john' }],
+      incidentSummaries: [{
+        id: 123,
+        user_name: 'Mark',
+        updated: true,
+        incident_date: 'Monday',
+        incident_type: ['TimeWaster', 'Abuser'],
+        incident_descriptor: 'My description...',
+        location: 'Ottawa',
+      },
+      {
+        id: 123764,
+        user_name: 'Dave',
+        updated: true,
+        incident_date: 'Monday',
+        incident_type: ['TimeWaster', 'Abuser'],
+        incident_descriptor: 'My description...',
+        location: 'Ottawa',
+      },
+      {
+        id: 1289776653,
+        user_name: 'Mark',
+        updated: true,
+        incident_date: 'Monday',
+        incident_type: ['TimeWaster', 'Abuser'],
+        incident_descriptor: 'My description...',
+        location: 'Ottawa',
+      },
+      {
+        id: 1278634,
+        user_name: 'Dave',
+        updated: true,
+        incident_date: 'Monday',
+        incident_type: ['TimeWaster', 'Abuser'],
+        incident_descriptor: 'My description...',
+        location: 'Ottawa',
+      },
+      {
+        id: 15675623,
+        user_name: 'Mark',
+        updated: true,
+        incident_date: 'Monday',
+        incident_type: ['TimeWaster', 'Abuser'],
+        incident_descriptor: 'My description...',
+        location: 'Ottawa',
+      },
+      {
+        id: 1234534,
+        user_name: 'Dave',
+        updated: true,
+        incident_date: 'Monday',
+        incident_type: ['TimeWaster', 'Abuser'],
+        incident_descriptor: 'My description...',
+        location: 'Ottawa',
+      },
+      {
+        id: 354435123,
+        user_name: 'Mark',
+        updated: true,
+        incident_date: 'Monday',
+        incident_type: ['TimeWaster', 'Abuser'],
+        incident_descriptor: 'My description...',
+        location: 'Ottawa',
+      },
+      {
+        id: 123434543,
+        user_name: 'Dave',
+        updated: true,
+        incident_date: 'Monday',
+        incident_type: ['TimeWaster', 'Abuser'],
+        incident_descriptor: 'My description...',
+        location: 'Ottawa',
+      }],
     };
   }
   getIncidentSummaries = () => {
-    return this.state.incidentSummaries.map(() => {
-      return (<div><Divider style={horizontalRuleStyle} /><IncidentSummary /></div>);
+    console.log(this.state.incidentSummaries);
+    return this.state.incidentSummaries.map((incident) => {
+      return (
+        <div key={incident.id}>
+          <Divider style={horizontalRuleStyle} /><IncidentSummary incidentSummary={incident} />
+        </div>
+      );
     });
   }
   updateCheck = () => {
@@ -84,7 +165,7 @@ class List extends Component {
             />
           </div>
         </div>
-        <div>
+        <div style={incidentResultStyle}>
           {this.getIncidentSummaries()}
         </div>
       </div>
