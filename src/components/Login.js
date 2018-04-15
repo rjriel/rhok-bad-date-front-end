@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import PropTypes from 'prop-types';
-import { TextField, RaisedButton } from 'material-ui';
+import { TextField, RaisedButton, FlatButton } from 'material-ui';
 
 const buttonStyle = {
   margin: 12,
@@ -22,6 +22,7 @@ class Login extends Component {
 
   render() {
     const { username, password } = this.state;
+    const { loginCB, signupCB } = this.props;
     return (
       <div>
         <h1>Ottawa Bad Date List</h1>
@@ -44,9 +45,15 @@ class Login extends Component {
         </div>
         <RaisedButton
           primary
-          onClick={() => this.props.loginCB({ username, password })}
+          onClick={() => loginCB({ username, password })}
           style={buttonStyle}
-          label="Log in/Sign up"
+          label="Log In"
+        />
+        <FlatButton
+          primary
+          onClick={() => signupCB({ username, password })}
+          style={buttonStyle}
+          label="Sign Up"
         />
         <div style={{ marginTop: 50 }}>
           <p><a href="tel:16135622333"><FontIcon className="material-icons" style={{ float: 'left' }}>phone</FontIcon></a></p>
@@ -63,10 +70,12 @@ class Login extends Component {
 
 Login.defaultProps = {
   loginCB: () => { },
+  signupCB: () => {},
 };
 
 Login.propTypes = {
   loginCB: PropTypes.func,
+  signupCB: PropTypes.func,
 };
 
 export default Login;
