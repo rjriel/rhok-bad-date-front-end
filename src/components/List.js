@@ -14,7 +14,7 @@ const listStyle = {
 
 const incidentResultStyle = {
   overflow: 'auto',
-  height: '600px',
+  height: '65vh',
 };
 
 const separatorStyle = {
@@ -279,7 +279,7 @@ class List extends Component {
           <div>
             <span style={searchLabelStyle}>Search:</span>
             <TextField
-              label="sjdkfskdfj"
+              label="Search"
               id="searchTerm"
               value={this.state.searchTerm}
               onChange={(event) => { this.setState({ searchTerm: event.target.value }); }}

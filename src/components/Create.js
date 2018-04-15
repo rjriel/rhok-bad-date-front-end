@@ -67,6 +67,8 @@ initialDate.setMilliseconds(0);
 class Create extends Component {
   state = {
     currentView: 0,
+    loading: false,
+    complete: false,
     dateTime: {
       date: initialDate,
       time: 0,
@@ -120,7 +122,14 @@ class Create extends Component {
 
   setNext = () => {
     const current = this.state.currentView;
-    const totalSteps = _.keys(incidentViews).length;
+    const totalSteps = _.keys(incidentViews).length
+    if (current === totalSteps - 1) {
+      this.state.complete = true;
+      
+    } else {
+      this.state.complete = false;
+    }
+
     if (current === totalSteps - 1) return;
     this.setState({
       currentView: current + 1,
@@ -129,6 +138,14 @@ class Create extends Component {
 
   setPrevious = () => {
     const current = this.state.currentView;
+    const totalSteps = _.keys(incidentViews).length
+    if (current === totalSteps - 1) {
+      this.state.complete = true;
+      
+    } else {
+      this.start.complete = false;
+    }
+
     if (current === 0) return;
     this.setState({
       currentView: current - 1,
@@ -138,8 +155,8 @@ class Create extends Component {
   incidentUpdate = (field, value) => {
     if (field === 'date' || field === 'time') {
       let currentField = field;
-      let currentValue = value;
       const { incidentDate } = this.state.incident;
+      let currentValue = value;
       currentField = 'incidentDate';
       if (field === 'date') {
         currentValue.setHours(incidentDate.getHours());
@@ -352,33 +369,38 @@ class Create extends Component {
           hintText="Enter make"
           floatingLabelText="Make"
           value={car.make}
+          onChange={(event, value) => { this.incidentVehicleUpdate('make', value); }}
         />
         <TextField
           hintText="Enter model"
           floatingLabelText="Model"
           value={car.model}
+          onChange={(event, value) => { this.incidentVehicleUpdate('model', value); }}
         />
         <TextField
           hintText="Enter type"
           floatingLabelText="Type"
           value={car.type}
+          onChange={(event, value) => { this.incidentVehicleUpdate('type', value); }}
         />
         <TextField
           hintText="Enter plate number"
           floatingLabelText="Plate number"
           value={car.plate_number}
+          onChange={(event, value) => { this.incidentVehicleUpdate('plate_number', value); }}
         />
         <TextField
           hintText="Enter plate province"
           floatingLabelText="Plate province"
           value={car.plate_province}
+          onChange={(event, value) => { this.incidentVehicleUpdate('plate_province', value); }}
         />
       </div>
     </div>;
   };
 
   renderIncidentOther = () => {
-    const { currentView, incident: { extra_details } } = this.state;
+    const { currentView, loading, incident: { extra_details } } = this.state;
     if (currentView !== incidentViews.OTHER) return null;
     return currentView === incidentViews.OTHER &&
       <div id="other">
@@ -389,14 +411,17 @@ class Create extends Component {
           multiLine={true}
           rows={4}
           value={extra_details}
+          onChange={(event, value) => { this.incidentUpdate('extra_details', value); }}
         />
         <Checkbox
           label="Do you want to us to contact you?"
           style={{ marginTop: 20 }}
         />
-        <div id="spinner" style={{ marginTop: 20, textAlign: 'center' }}>
+        { loading &&
+        <div id="spinner" className={this.state.loading ? '' : hideStyle} style={{ marginTop: 20, textAlign: 'center' }}>
           <CircularProgress />
         </div>
+        }
       </div>;
   };
 
@@ -413,7 +438,7 @@ class Create extends Component {
   };
 
   render() {
-    const { currentView } = this.state;
+    const { currentView, complete, loading } = this.state;
     const totalSteps = _.keys(incidentViews).length;
     return (
       <div style={containerStyle}>
@@ -429,11 +454,12 @@ class Create extends Component {
           {this.renderIncidentOther()}
           {this.renderSuccess()}
         </div>
-
+      { !complete &&
         <div style={buttonStyles}>
           <RaisedButton primary onClick={() => this.setPrevious()} >Back</RaisedButton>
           <RaisedButton primary onClick={() => this.setNext()}>Next</RaisedButton>
         </div>
+      }
       </div>
     );
   }

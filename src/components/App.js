@@ -11,6 +11,8 @@ import BottomNav from './BottomNav';
 import { views } from './helpers';
 
 
+let imgUrl = '../images/Background.jpg'
+
 const appStyles = {
   boxSizing: 'border-box',
   margin: 0,
@@ -93,8 +95,12 @@ class App extends Component {
 
   render() {
     const { currentView, user } = this.state;
+    const imageUrl = require('../images/Background.jpg')
     return (
-      <div style={appStyles} >
+      <div style={{appStyles, background: `linear-gradient(
+        rgba(0, 0, 0, 0.6), 
+        rgba(0, 0, 0, 0.6)
+      ), url(${imageUrl})`, backgroundSize: 'cover'}}>
         <div style={containerStyles}>
           { currentView === views.HOME &&
             this.renderLogin()
