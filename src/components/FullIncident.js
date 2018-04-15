@@ -36,7 +36,7 @@ class FullIncident extends Component {
       <div >
         <Card>
           <CardHeader
-            title={incident_type.join()}
+            title={incident_type ? incident_type.join() : 'n/a'}
             subtitle={incident_date}
             actAsExpander
             showExpandableButton
