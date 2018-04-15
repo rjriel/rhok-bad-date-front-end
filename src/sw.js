@@ -17,13 +17,13 @@ limitations under the License.
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0/workbox-sw.js');
 
 workbox.setConfig({
-    debug: true
+  debug: true,
 });
 
 if (workbox) {
-  console.log(`Yay! Workbox is loaded 🎉`);
+  console.log('Yay! Workbox is loaded 🎉');
 
-  workbox.precaching.precacheAndRoute([]);
+  workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
 
   workbox.routing.registerRoute(
     /(.*)\.(?:png|gif|jpg)/,
@@ -33,10 +33,10 @@ if (workbox) {
         new workbox.expiration.Plugin({
           maxEntries: 50,
           maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
-        })
-      ]
-    })
+        }),
+      ],
+    }),
   );
 } else {
-  console.log(`Boo! Workbox didn't load 😬`);
+  console.log('Boo! Workbox didn\'t load 😬');
 }
