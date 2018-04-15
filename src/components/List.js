@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import SortDropDownMenu from './SortDropDownMenu';
 import IncidentSummary from './IncidentSummary';
+import FullIncident from './FullIncident';
 
 const testIncidents = [
   {
@@ -127,7 +128,8 @@ class List extends Component {
     this.state = {
       searchTerm: '',
       checked: true,
-      incidentSummaries: testIncidents,
+      fullIncidents: [],
+      basicIncidents: [],
     };
   }
 
@@ -149,9 +151,15 @@ class List extends Component {
     const publicProp = !checked ? '/public' : '';
     axios.get(`https://a7v59dsb4l.execute-api.ca-central-1.amazonaws.com/UAT/incident${publicProp}?username=${username}&authorization=${id}`)
       .then(({ data }) => {
-        this.setState({
-          incidentSummaries: data,
-        });
+        if (checked) {
+          this.setState({
+            fullIncidents: data,
+          });
+        } else {
+          this.setState({
+            basicIncidents: data,
+          });
+        }
       });
   }
 
@@ -162,9 +170,24 @@ class List extends Component {
     }
   }
 
-  renderIncidentSummaries = () => {
-    console.log(this.state.incidentSummaries);
-    const filtered = this.state.incidentSummaries.filter((incident) => {
+  renderFullIncidents = () => {
+    console.log(this.state.fullIncidents);
+    const filtered = this.state.fullIncidents.filter((incident) => {
+      return JSON.stringify(incident).includes(this.state.searchTerm);
+    });
+    return filtered.map((incident) => {
+      return (
+        <div key={incident.id}>
+          <Divider style={horizontalRuleStyle} /><FullIncident fullIncident={incident} />
+        </div>
+      );
+    });
+  }
+
+  renderBasicIncidents = () => {
+    console.log(this.state.basicIncidents);
+    const filtered = this.state.basicIncidents.filter((incident) => {
+
       return JSON.stringify(incident).includes(this.state.searchTerm);
     });
     return filtered.map((incident) => {
@@ -207,7 +230,7 @@ class List extends Component {
         </div>
         <Divider style={separatorStyle} />
         <div style={incidentResultStyle}>
-          {this.renderIncidentSummaries()}
+          {this.state.checked ? this.renderFullIncidents() : this.renderBasicIncidents()}
         </div>
       </div>
     );

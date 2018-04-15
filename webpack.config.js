@@ -78,7 +78,7 @@ const config = {
       swSrc: './src/sw.js',
     }),
     new CopyWebpackPlugin([
-      { from: 'src/images', to: 'images' },
+      { from: 'src/images', to: '' },
     ]),
   ],
 

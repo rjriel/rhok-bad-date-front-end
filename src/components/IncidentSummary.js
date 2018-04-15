@@ -14,22 +14,19 @@ class IncidentSummary extends Component {
   }
 
   render() {
-    const {user_name, incident_type} = this.props.incidentSummary;
+    const { incident_type, incident_date, incident_description } = this.props.incidentSummary;
 
     return (
       <div >
         <Card>
           <CardHeader
-            title={ user_name }
-            subtitle={ incident_type.join() }
+            title={incident_type.join()}
+            subtitle={incident_date}
             actAsExpander
             showExpandableButton
           />
           <CardText expandable>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-            Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-            Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+            {incident_description}
           </CardText>
         </Card>
       </div>
