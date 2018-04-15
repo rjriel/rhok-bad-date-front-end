@@ -51,83 +51,193 @@ class List extends Component {
     this.state = {
       searchTerm: '',
       checked: false,
-      incidentSummaries: [{
-        id: 123,
-        user_name: 'Mark',
-        updated: true,
-        incident_date: 'Monday',
-        incident_type: ['TimeWaster', 'Abuser'],
-        incident_descriptor: 'My description...',
-        location: 'Ottawa',
-      },
-      {
-        id: 123764,
-        user_name: 'Dave',
-        updated: true,
-        incident_date: 'Monday',
-        incident_type: ['TimeWaster', 'Abuser'],
-        incident_descriptor: 'My description...',
-        location: 'Ottawa',
-      },
-      {
-        id: 1289776653,
-        user_name: 'Mark',
-        updated: true,
-        incident_date: 'Monday',
-        incident_type: ['TimeWaster', 'Abuser'],
-        incident_descriptor: 'My description...',
-        location: 'Ottawa',
-      },
-      {
-        id: 1278634,
-        user_name: 'Dave',
-        updated: true,
-        incident_date: 'Monday',
-        incident_type: ['TimeWaster', 'Abuser'],
-        incident_descriptor: 'My description...',
-        location: 'Ottawa',
-      },
-      {
-        id: 15675623,
-        user_name: 'Mark',
-        updated: true,
-        incident_date: 'Monday',
-        incident_type: ['TimeWaster', 'Abuser'],
-        incident_descriptor: 'My description...',
-        location: 'Ottawa',
-      },
-      {
-        id: 1234534,
-        user_name: 'Dave',
-        updated: true,
-        incident_date: 'Monday',
-        incident_type: ['TimeWaster', 'Abuser'],
-        incident_descriptor: 'My description...',
-        location: 'Ottawa',
-      },
-      {
-        id: 354435123,
-        user_name: 'Mark',
-        updated: true,
-        incident_date: 'Monday',
-        incident_type: ['TimeWaster', 'Abuser'],
-        incident_descriptor: 'My description...',
-        location: 'Ottawa',
-      },
-      {
-        id: 123434543,
-        user_name: 'Dave',
-        updated: true,
-        incident_date: 'Monday',
-        incident_type: ['TimeWaster', 'Abuser'],
-        incident_descriptor: 'My description...',
-        location: 'Ottawa',
-      }],
+      basicIncidents: [
+        {
+          id: 0,
+          user_name: 'string',
+          updated: true,
+          incident_date: 'string',
+          incident_type: [
+            [
+              'string',
+            ],
+          ],
+          incident_descriptor: 'string',
+          car: {
+            plate_number: 'string',
+            plate_province: 'string',
+            model: 'string',
+            type: 'string',
+            make: 'string',
+            extra_details: 'string',
+          },
+          location: 'string',
+          offender_details: {
+            name: 0,
+            age: 'string',
+            gender: 'string',
+            hair_colour: 'string',
+            hair_style: 'string',
+            facial_hair: 'string',
+            height: 'string',
+            weight: 'string',
+            build: 'string',
+            clothing: 'string',
+            tattoos: 'string',
+            scars: 'string',
+            smells: 'string',
+            accent: 'string',
+            skin_colour: 'string',
+            eye_colour: 'string',
+            facial_description: 'string',
+            extra_details: 'string',
+            contact_type: 'string',
+            contaact_details: 'string',
+          },
+          incident_description: 'string',
+          extra_details: 'string',
+          repeat_offender: true,
+          incident_report_date: 'string',
+          submitter_contact_details: 'string',
+          submitter_contact_method: 'string',
+          comments: {
+            user_name: 'string',
+            comment_details: 'string',
+          },
+        },
+      ],
+      fullIncidents: [
+        {
+          id: 0,
+          user_name: 'string',
+          updated: true,
+          incident_date: 'string',
+          incident_type: [
+            [
+              'string',
+            ],
+          ],
+          incident_descriptor: 'string',
+          car: {
+            plate_number: 'string',
+            plate_province: 'string',
+            model: 'string',
+            type: 'string',
+            make: 'string',
+            extra_details: 'string',
+          },
+          location: 'string',
+          offender_details: {
+            name: 0,
+            age: 'string',
+            gender: 'string',
+            hair_colour: 'string',
+            hair_style: 'string',
+            facial_hair: 'string',
+            height: 'string',
+            weight: 'string',
+            build: 'string',
+            clothing: 'string',
+            tattoos: 'string',
+            scars: 'string',
+            smells: 'string',
+            accent: 'string',
+            skin_colour: 'string',
+            eye_colour: 'string',
+            facial_description: 'string',
+            extra_details: 'string',
+            contact_type: 'string',
+            contaact_details: 'string',
+          },
+          incident_description: 'string',
+          extra_details: 'string',
+          repeat_offender: true,
+          incident_report_date: 'string',
+          submitter_contact_details: 'string',
+          submitter_contact_method: 'string',
+          comments: {
+            user_name: 'string',
+            comment_details: 'string',
+          },
+        },
+      ],
+      // [{
+      //   id: 123,
+      //   user_name: 'Mark',
+      //   updated: true,
+      //   incident_date: 'Monday',
+      //   incident_type: ['TimeWaster', 'Abuser'],
+      //   incident_descriptor: 'My description...',
+      //   location: 'Ottawa',
+      // },
+      // {
+      //   id: 123764,
+      //   user_name: 'Dave',
+      //   updated: true,
+      //   incident_date: 'Monday',
+      //   incident_type: ['TimeWaster', 'Abuser'],
+      //   incident_descriptor: 'My description...',
+      //   location: 'Ottawa',
+      // },
+      // {
+      //   id: 1289776653,
+      //   user_name: 'Mark',
+      //   updated: true,
+      //   incident_date: 'Monday',
+      //   incident_type: ['TimeWaster', 'Abuser'],
+      //   incident_descriptor: 'My description...',
+      //   location: 'Ottawa',
+      // },
+      // {
+      //   id: 1278634,
+      //   user_name: 'Dave',
+      //   updated: true,
+      //   incident_date: 'Monday',
+      //   incident_type: ['TimeWaster', 'Abuser'],
+      //   incident_descriptor: 'My description...',
+      //   location: 'Ottawa',
+      // },
+      // {
+      //   id: 15675623,
+      //   user_name: 'Mark',
+      //   updated: true,
+      //   incident_date: 'Monday',
+      //   incident_type: ['TimeWaster', 'Abuser'],
+      //   incident_descriptor: 'My description...',
+      //   location: 'Ottawa',
+      // },
+      // {
+      //   id: 1234534,
+      //   user_name: 'Dave',
+      //   updated: true,
+      //   incident_date: 'Monday',
+      //   incident_type: ['TimeWaster', 'Abuser'],
+      //   incident_descriptor: 'My description...',
+      //   location: 'Ottawa',
+      // },
+      // {
+      //   id: 354435123,
+      //   user_name: 'Mark',
+      //   updated: true,
+      //   incident_date: 'Monday',
+      //   incident_type: ['TimeWaster', 'Abuser'],
+      //   incident_descriptor: 'My description...',
+      //   location: 'Ottawa',
+      // },
+      // {
+      //   id: 123434543,
+      //   user_name: 'Dave',
+      //   updated: true,
+      //   incident_date: 'Monday',
+      //   incident_type: ['TimeWaster', 'Abuser'],
+      //   incident_descriptor: 'My description...',
+      //   location: 'Ottawa',
+      // }],
     };
   }
-  getIncidentSummaries = () => {
-    console.log(this.state.incidentSummaries);
-    const filtered = this.state.incidentSummaries.filter((incident) => {
+  getFullIncidents = () => {
+    console.log(this.state.fullIncidents);
+    const filtered = this.state.fullIncidents.filter((incident) => {
       return JSON.stringify(incident).includes(this.state.searchTerm);
     });
     return filtered.map((incident) => {
@@ -138,6 +248,21 @@ class List extends Component {
       );
     });
   }
+
+  getBasicIncidents = () => {
+    console.log(this.state.basicIncidents);
+    const filtered = this.state.basicIncidents.filter((incident) => {
+      return JSON.stringify(incident).includes(this.state.searchTerm);
+    });
+    return filtered.map((incident) => {
+      return (
+        <div key={incident.id}>
+          <Divider style={horizontalRuleStyle} /><IncidentSummary incidentSummary={incident} />
+        </div>
+      );
+    });
+  }
+
   updateCheck = () => {
     if (this.state) {
       console.log('Checkmark is now', !this.state.checked);
@@ -175,7 +300,7 @@ class List extends Component {
         </div>
         <Divider style={separatorStyle} />
         <div style={incidentResultStyle}>
-          {this.getIncidentSummaries()}
+          {this.getFullIncidents()}
         </div>
       </div>
     );
