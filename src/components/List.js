@@ -16,6 +16,11 @@ const incidentResultStyle = {
   height: '600px',
 };
 
+const separatorStyle = {
+  marginTop: '30px',
+  backgroundColor: 'rgb(0, 188, 212)',
+};
+
 const horizontalRuleStyle = {
   marginTop: '30px',
 };
@@ -122,7 +127,10 @@ class List extends Component {
   }
   getIncidentSummaries = () => {
     console.log(this.state.incidentSummaries);
-    return this.state.incidentSummaries.map((incident) => {
+    const filtered = this.state.incidentSummaries.filter((incident) => {
+      return JSON.stringify(incident).includes(this.state.searchTerm);
+    });
+    return filtered.map((incident) => {
       return (
         <div key={incident.id}>
           <Divider style={horizontalRuleStyle} /><IncidentSummary incidentSummary={incident} />
@@ -165,6 +173,7 @@ class List extends Component {
             />
           </div>
         </div>
+        <Divider style={separatorStyle} />
         <div style={incidentResultStyle}>
           {this.getIncidentSummaries()}
         </div>

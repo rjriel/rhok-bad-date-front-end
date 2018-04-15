@@ -54,8 +54,12 @@ const config = {
   },
   plugins: [
     new PwaManifestWebpackPlugin({
-      name: 'Todos',
-      description: 'a todo demo of pwa',
+      name: "OBDL",
+      description: "Ottawa Bad Date List",
+      short_name: "OBDL",
+      start_url: "./index.html",
+      background_color: "#ffffff",
+      theme_color: "#000000",
       icon: {
         src: path.resolve('src/images/umbrella.png'),
         sizes: [36, 48, 96, 120],
