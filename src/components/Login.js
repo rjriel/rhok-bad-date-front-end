@@ -139,7 +139,8 @@ class Login extends Component {
   render() {
     return (
       <div style={containerStyles}>
-        <h1>Ottawa Bad Date List</h1>
+        <h1 style={{ fontSize: 24, margin: 0 }}>Ottawa</h1>
+        <h1 style={{ fontSize: 40, marginTop: -10 }}>Bad Date List</h1>
         { this.renderLogIn() }
         { this.renderLogOut() }
       </div>

@@ -320,7 +320,7 @@ class Create extends Component {
       <div id="location">
         <TextField
           value={location}
-          hintText="Hint Text"
+          hintText="Enter location"
           floatingLabelText="Where did this incident occur?"
           onChange={(event, value) => { this.incidentUpdate('location', value); }}
         />
