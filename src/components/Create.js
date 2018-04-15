@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 import {
   DatePicker,
   RaisedButton,
@@ -19,6 +20,12 @@ const containerStyle = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+};
+
+const errorStyles = {
+  color: '#f36868',
+  textAlign: 'center',
+  marginBottom: '20px',
 };
 
 const stepContainerStyles = {
@@ -66,6 +73,7 @@ initialDate.setMilliseconds(0);
 
 class Create extends Component {
   state = {
+    errorMessage: '',
     currentView: 0,
     loading: false,
     complete: false,
@@ -141,7 +149,6 @@ class Create extends Component {
     const totalSteps = _.keys(incidentViews).length;
     if (current === totalSteps - 1) {
       this.state.complete = true;
-      
     } else {
       this.start.complete = false;
     }
@@ -211,17 +218,34 @@ class Create extends Component {
 
   submitIncident = () => {
     const { incident } = this.state;
-    console.log('SUBMIT INCIDENT', incident);
+    const { user } = this.props;
+    if (!user) return;
+
+    const { username, id } = user;
     this.setState({
       loading: true,
     });
 
-    setTimeout(() => {
-      this.setState({
-        loading: false,
-        currentView: incidentViews.SUCCESS,
-      });
-    }, 3000);
+    axios.post(
+      `https://a7v59dsb4l.execute-api.ca-central-1.amazonaws.com/UAT/incident?username=${username}&authorization=${id}`,
+      incident,
+    ).then(({ data }) => {
+      if (data) {
+        this.setState({
+          loading: false,
+          currentView: incidentViews.SUCCESS,
+        });
+      } else {
+        this.setState({
+          errorMessage: 'Error submitting your incident',
+        });
+      }
+    });
+    //   this.setState({
+    //     loading: false,
+    //     currentView: incidentViews.SUCCESS,
+    //   });
+    // });
   }
 
   renderIncidentType = () => {
@@ -453,14 +477,14 @@ class Create extends Component {
   };
 
   render() {
-    const { currentView, complete } = this.state;
+    const { currentView, complete, errorMessage } = this.state;
     const totalSteps = _.keys(incidentViews).length;
     const isLast = currentView === totalSteps - 1;
     const nextText = isLast ? 'Submit' : 'Next';
     return (
       <div style={containerStyle}>
         <h1 style={headerStyles}>New Incident</h1>
-        <div>Step {currentView + 1} of {totalSteps}</div>
+        {!isLast && <div>Step {currentView + 1} of {totalSteps}</div>}
 
         <div style={stepContainerStyles}>
           {this.renderIncidentType()}
@@ -471,6 +495,7 @@ class Create extends Component {
           {this.renderIncidentOther()}
           {this.renderSuccess()}
         </div>
+        { errorMessage && <div style={errorStyles}>{errorMessage}</div>}
         {
           !complete &&
           <div style={buttonStyles}>
@@ -482,5 +507,13 @@ class Create extends Component {
     );
   }
 }
+
+Create.defaultProps = {
+  user: null,
+};
+
+Create.propTypes = {
+  user: PropTypes.objectOf(PropTypes.any),
+};
 
 export default Create;

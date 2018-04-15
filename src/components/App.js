@@ -130,7 +130,7 @@ class App extends Component {
           { currentView === views.HOME &&
             this.renderLogin()
           }
-          { currentView === views.CREATE && <Create /> }
+          { currentView === views.CREATE && <Create user={user} /> }
           { currentView === views.LIST && <List user={user} /> }
           { currentView === views.RESOURCES && <Resources />}
         </div>

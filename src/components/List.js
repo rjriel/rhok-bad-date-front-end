@@ -86,11 +86,13 @@ const listStyle = {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'start',
+  height: '90vh',
 };
 
 const incidentResultStyle = {
   overflow: 'auto',
-  height: '65vh',
+  maxHeight: '300px',
+
 };
 
 const separatorStyle = {
@@ -134,25 +136,24 @@ class List extends Component {
   }
 
   componentWillMount = () => {
-    this.getIncidentSummaries();
+    this.getIncidentSummaries(this.state.checked);
   }
 
   componentWillUpdate = (nextProps, nextState) => {
     const { checked } = this.state;
     if (checked !== nextState.checked) {
-      this.getIncidentSummaries();
+      this.getIncidentSummaries(nextState.checked);
     }
   }
 
-  getIncidentSummaries = () => {
+  getIncidentSummaries = (isPrivate) => {
     const { user } = this.props;
-    const { checked } = this.state;
     const { username, id } = user;
-    const publicProp = !checked ? '/public' : '';
+    const publicProp = !isPrivate ? '/public' : '';
     console.log('GET SUMMARIES', publicProp);
     axios.get(`https://a7v59dsb4l.execute-api.ca-central-1.amazonaws.com/UAT/incident${publicProp}?username=${username}&authorization=${id}`)
       .then(({ data }) => {
-        if (checked) {
+        if (isPrivate) {
           this.setState({
             fullIncidents: data,
           });
