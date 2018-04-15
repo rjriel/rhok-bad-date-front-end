@@ -12,7 +12,6 @@ const incidentViews = {
   OFFENDER: 3,
   VEHICLE: 4,
   OTHER: 5,
-  SUCCESS: 6,
 };
 
 export { views, incidentViews };

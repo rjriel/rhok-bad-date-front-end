@@ -4,13 +4,13 @@ import {
   DatePicker,
   RaisedButton,
   TextField,
-  DropDownMenu,
   MenuItem,
   SelectField,
   Checkbox,
   CircularProgress,
-  FontIcon
+  FontIcon,
 } from 'material-ui';
+import axios from 'axios';
 import { incidentViews } from './helpers';
 
 const containerStyle = {
@@ -122,10 +122,10 @@ class Create extends Component {
 
   setNext = () => {
     const current = this.state.currentView;
-    const totalSteps = _.keys(incidentViews).length
+    const totalSteps = _.keys(incidentViews).length;
     if (current === totalSteps - 1) {
       this.state.complete = true;
-      
+      this.submitIncident();
     } else {
       this.state.complete = false;
     }
@@ -138,7 +138,7 @@ class Create extends Component {
 
   setPrevious = () => {
     const current = this.state.currentView;
-    const totalSteps = _.keys(incidentViews).length
+    const totalSteps = _.keys(incidentViews).length;
     if (current === totalSteps - 1) {
       this.state.complete = true;
       
@@ -208,6 +208,21 @@ class Create extends Component {
       },
     });
   };
+
+  submitIncident = () => {
+    const { incident } = this.state;
+    console.log('SUBMIT INCIDENT', incident);
+    this.setState({
+      loading: true,
+    });
+
+    setTimeout(() => {
+      this.setState({
+        loading: false,
+        currentView: incidentViews.SUCCESS,
+      });
+    }, 3000);
+  }
 
   renderIncidentType = () => {
     const { currentView, incident: { incidentType } } = this.state;
@@ -438,8 +453,10 @@ class Create extends Component {
   };
 
   render() {
-    const { currentView, complete, loading } = this.state;
+    const { currentView, complete } = this.state;
     const totalSteps = _.keys(incidentViews).length;
+    const isLast = currentView === totalSteps - 1;
+    const nextText = isLast ? 'Submit' : 'Next';
     return (
       <div style={containerStyle}>
         <h1 style={headerStyles}>New Incident</h1>
@@ -454,12 +471,13 @@ class Create extends Component {
           {this.renderIncidentOther()}
           {this.renderSuccess()}
         </div>
-      { !complete &&
-        <div style={buttonStyles}>
-          <RaisedButton primary onClick={() => this.setPrevious()} >Back</RaisedButton>
-          <RaisedButton primary onClick={() => this.setNext()}>Next</RaisedButton>
-        </div>
-      }
+        {
+          !complete &&
+          <div style={buttonStyles}>
+            <RaisedButton primary onClick={() => this.setPrevious()} >Back</RaisedButton>
+            <RaisedButton primary onClick={() => this.setNext()}>{nextText}</RaisedButton>
+          </div>
+        }
       </div>
     );
   }
