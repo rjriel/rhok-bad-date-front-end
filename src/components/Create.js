@@ -168,6 +168,30 @@ class Create extends Component {
     }
   };
 
+  incidentOffenderUpdate = (field, value) => {
+    this.setState({
+      incident: {
+        ...this.state.incident,
+        offender: {
+          ...this.state.incident.offender,
+          [field]: value,
+        },
+      },
+    });
+  };
+
+  incidentVehicleUpdate = (field, value) => {
+    this.setState({
+      incident: {
+        ...this.state.incident,
+        car: {
+          ...this.state.incident.car,
+          [field]: value,
+        },
+      },
+    });
+  };
+
   renderIncidentType = () => {
     const { currentView, incident: { incidentType } } = this.state;
     if (currentView !== incidentViews.TYPE) return null;
@@ -234,13 +258,15 @@ class Create extends Component {
   };
 
   renderIncidentLocation = () => {
-    const { currentView } = this.state;
+    const { currentView, incident: { location } } = this.state;
     if (currentView !== incidentViews.LOCATION) return null;
     return (
       <div id="location">
         <TextField
+          value={location}
           hintText="Hint Text"
           floatingLabelText="Where did this incident occur?"
+          onChange={(event, value) => { this.incidentUpdate('location', value); }}
         />
       </div>
     );
@@ -251,7 +277,7 @@ class Create extends Component {
     if (currentView !== incidentViews.OFFENDER) return null;
     return currentView === incidentViews.OFFENDER &&
       <div id="offender">
-        <p style={{textAlign: 'center'}}>Who was the aggressor?</p>
+        <p style={{ textAlign: 'center' }}>Who was the aggressor?</p>
         <div style={columnStyle}>
           <TextField
             hintText="Enter age"
@@ -308,39 +334,39 @@ class Create extends Component {
   };
 
   renderIncidentVehicle = () => {
-    const { currentView, incident: { car }  } = this.state;
+    const { currentView, incident: { car } } = this.state;
     if (currentView !== incidentViews.VEHICLE) return null;
-    return currentView === incidentViews.VEHICLE && 
-    <div id="vehicle" style={{textAlign: 'center'}}>
-    <p style={{marginBottom: -10}}>What were they driving?</p>
-    <div>
-      <TextField
-        hintText="Enter make"
-        floatingLabelText="Make"
-        value={car.make}
-      />
-      <TextField
-        hintText="Enter model"
-        floatingLabelText="Model"
-        value={car.model}
-      />
-      <TextField
-        hintText="Enter type"
-        floatingLabelText="Type"
-        value={car.type}
-      />
-      <TextField
-        hintText="Enter plate number"
-        floatingLabelText="Plate number"
-        value={car.plate_number}
-      />
-      <TextField
-        hintText="Enter plate province"
-        floatingLabelText="Plate province"
-        value={car.plate_province}
-      />
-    </div>
-  </div>;
+    return currentView === incidentViews.VEHICLE &&
+    <div id="vehicle" style={{ textAlign: 'center' }}>
+      <p style={{ marginBottom: -10 }} >What were they driving?</p>
+      <div>
+        <TextField
+          hintText="Enter make"
+          floatingLabelText="Make"
+          value={car.make}
+        />
+        <TextField
+          hintText="Enter model"
+          floatingLabelText="Model"
+          value={car.model}
+        />
+        <TextField
+          hintText="Enter type"
+          floatingLabelText="Type"
+          value={car.type}
+        />
+        <TextField
+          hintText="Enter plate number"
+          floatingLabelText="Plate number"
+          value={car.plate_number}
+        />
+        <TextField
+          hintText="Enter plate province"
+          floatingLabelText="Plate province"
+          value={car.plate_province}
+        />
+      </div>
+    </div>;
   };
 
   renderIncidentOther = () => {
