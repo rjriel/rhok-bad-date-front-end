@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import SortDropDownMenu from './SortDropDownMenu';
 import IncidentSummary from './IncidentSummary';
+import FullIncident from './FullIncident';
 
 const listStyle = {
   margin: '30px',
@@ -54,12 +55,12 @@ class List extends Component {
       basicIncidents: [
         {
           id: 0,
-          user_name: 'string',
+          user_name: 'Basic Guy',
           updated: true,
-          incident_date: 'string',
+          incident_date: '04/05/2018',
           incident_type: [
             [
-              'string',
+              'Abuser', 'Time Waster',
             ],
           ],
           incident_descriptor: 'string',
@@ -94,7 +95,7 @@ class List extends Component {
             contact_type: 'string',
             contaact_details: 'string',
           },
-          incident_description: 'string',
+          incident_description: 'Punched me in the face.',
           extra_details: 'string',
           repeat_offender: true,
           incident_report_date: 'string',
@@ -109,47 +110,47 @@ class List extends Component {
       fullIncidents: [
         {
           id: 0,
-          user_name: 'string',
+          user_name: 'Full Guy',
           updated: true,
-          incident_date: 'string',
+          incident_date: '04/03/2018',
           incident_type: [
             [
-              'string',
+              'Creepy', 'No Payment',
             ],
           ],
           incident_descriptor: 'string',
           car: {
-            plate_number: 'string',
+            plate_number: 'YA34 BUD4',
             plate_province: 'string',
-            model: 'string',
-            type: 'string',
-            make: 'string',
-            extra_details: 'string',
+            model: '3 GT',
+            type: 'sedan',
+            make: 'Mazda',
+            extra_details: 'White',
           },
           location: 'string',
           offender_details: {
-            name: 0,
-            age: 'string',
-            gender: 'string',
+            name: 'Doug Loser',
+            age: '36',
+            gender: 'Male',
             hair_colour: 'string',
             hair_style: 'string',
             facial_hair: 'string',
-            height: 'string',
-            weight: 'string',
+            height: '5\'10""',
+            weight: '300 lbs',
             build: 'string',
             clothing: 'string',
             tattoos: 'string',
             scars: 'string',
             smells: 'string',
             accent: 'string',
-            skin_colour: 'string',
+            skin_colour: 'white',
             eye_colour: 'string',
             facial_description: 'string',
             extra_details: 'string',
             contact_type: 'string',
-            contaact_details: 'string',
+            contact_details: 'limps when he walks',
           },
-          incident_description: 'string',
+          incident_description: 'Loser did not pay. Ran away. I threw a shoe at him.',
           extra_details: 'string',
           repeat_offender: true,
           incident_report_date: 'string',
@@ -243,7 +244,7 @@ class List extends Component {
     return filtered.map((incident) => {
       return (
         <div key={incident.id}>
-          <Divider style={horizontalRuleStyle} /><IncidentSummary incidentSummary={incident} />
+          <Divider style={horizontalRuleStyle} /><FullIncident fullIncident={incident} />
         </div>
       );
     });
@@ -300,7 +301,7 @@ class List extends Component {
         </div>
         <Divider style={separatorStyle} />
         <div style={incidentResultStyle}>
-          {this.getFullIncidents()}
+          {this.state.checked ? this.getFullIncidents() : this.getBasicIncidents()}
         </div>
       </div>
     );
