@@ -36,13 +36,6 @@ class IncidentSummary extends Component {
 
 IncidentSummary.defaultProps = {
   incidentSummary: {
-    id: 123,
-    user_name: 'Mark',
-    updated: true,
-    incident_date: 'Monday',
-    incident_type: ['TimeWaster', 'Abuser'],
-    incident_descriptor: 'My description...',
-    location: 'Ottawa',
   },
 };
 

@@ -128,8 +128,8 @@ class List extends Component {
     this.state = {
       searchTerm: '',
       checked: true,
-      fullIncidents: [],
       basicIncidents: [],
+      fullIncidents: [],
     };
   }
 
