@@ -17,7 +17,7 @@ const bottomNavStyles = {
   bottom: 0,
 };
 
-const BottomNav = ({ currentView, viewSelector }) => {
+const BottomNav = ({ currentView, viewSelector, loggedIn }) => {
   return (
     <BottomNavigation style={bottomNavStyles} selectedIndex={currentView}>
       <BottomNavigationItem
@@ -28,11 +28,15 @@ const BottomNav = ({ currentView, viewSelector }) => {
       <BottomNavigationItem
         label="Create"
         icon={createIcon}
+        style={null}
+        disabled={!loggedIn}
         onClick={() => { viewSelector(views.CREATE); }}
       />
       <BottomNavigationItem
         label="List"
         icon={listIcon}
+        color="#FF0000"
+        disabled={!loggedIn}
         onClick={() => { viewSelector(views.LIST); }}
       />
       <BottomNavigationItem
@@ -47,11 +51,13 @@ const BottomNav = ({ currentView, viewSelector }) => {
 BottomNav.defaultProps = {
   currentView: 0,
   viewSelector: () => {},
+  loggedIn: false,
 };
 
 BottomNav.propTypes = {
   currentView: PropTypes.number,
   viewSelector: PropTypes.func,
-}
+  loggedIn: PropTypes.bool,
+};
 
 export default BottomNav;
