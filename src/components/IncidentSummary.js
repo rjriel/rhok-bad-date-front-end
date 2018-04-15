@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardText } from 'material-ui';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // const showOnlyMyIncidentsCheckboxStyle = {
 //   marginTop: '17px',
@@ -13,12 +14,14 @@ class IncidentSummary extends Component {
   }
 
   render() {
+    const {user_name, incident_type} = this.props.incidentSummary;
+
     return (
       <div >
         <Card>
           <CardHeader
-            title="Without Avatar"
-            subtitle="Subtitle"
+            title={ user_name }
+            subtitle={ incident_type.join() }
             actAsExpander
             showExpandableButton
           />
@@ -35,9 +38,26 @@ class IncidentSummary extends Component {
 }
 
 IncidentSummary.defaultProps = {
+  incidentSummary: {
+    id: 123,
+    user_name: 'Mark',
+    updated: true,
+    incident_date: 'Monday',
+    incident_type: ['TimeWaster', 'Abuser'],
+    incident_descriptor: 'My description...',
+    location: 'Ottawa',
+  },
 };
 
 IncidentSummary.propTypes = {
+  incidentSummary: PropTypes.shape({
+    id: PropTypes.number,
+    user_name: PropTypes.string,
+    updated: PropTypes.bool,
+    incident_date: PropTypes.string,
+    incident_type: PropTypes.arrayOf(PropTypes.string),
+    location: PropTypes.string,
+  }),
 };
 
 export default IncidentSummary;
