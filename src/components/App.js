@@ -9,14 +9,17 @@ import Create from './Create';
 import BottomNav from './BottomNav';
 
 import { views } from './helpers';
-
-
-let imgUrl = '../images/Background.jpg'
+import * as imageUrl from '../images/Background.jpg';
 
 const appStyles = {
   boxSizing: 'border-box',
   margin: 0,
   padding: 0,
+  background: `linear-gradient(
+    rgba(0, 0, 0, 0.6), 
+    rgba(0, 0, 0, 0.6)
+  ), url(${imageUrl})`,
+  backgroundSize: 'cover',
 };
 
 const containerStyles = {
@@ -41,7 +44,8 @@ class App extends Component {
     //   return /iphone|ipad|ipod/.test(userAgent);
     // };
     // // Detects if device is in standalone mode
-    // const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+    // const isInStandaloneMode = () =>
+    //    ('standalone' in window.navigator) && (window.navigator.standalone);
 
     // Checks if should display install popup notification:
     // if (isIos() && !isInStandaloneMode()) {
@@ -120,12 +124,9 @@ class App extends Component {
 
   render() {
     const { currentView, user } = this.state;
-    const imageUrl = require('../images/Background.jpg')
+
     return (
-      <div style={{appStyles, background: `linear-gradient(
-        rgba(0, 0, 0, 0.6), 
-        rgba(0, 0, 0, 0.6)
-      ), url(${imageUrl})`, backgroundSize: 'cover'}}>
+      <div style={appStyles}>
         <div style={containerStyles}>
           { currentView === views.HOME &&
             this.renderLogin()

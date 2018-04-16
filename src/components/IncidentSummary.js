@@ -1,10 +1,6 @@
-import { Card, CardHeader, CardText } from 'material-ui';
+import { Card, CardText } from 'material-ui';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-// const showOnlyMyIncidentsCheckboxStyle = {
-//   marginTop: '17px',
-// };
 
 class IncidentSummary extends Component {
   constructor(props) {
@@ -14,13 +10,13 @@ class IncidentSummary extends Component {
   }
 
   render() {
-    const { public_incident_description } = this.props.incidentSummary;
+    const { public_incident_description: publicIncidentDescription } = this.props.incidentSummary;
 
     return (
       <div >
         <Card>
           <CardText>
-            {public_incident_description}
+            {publicIncidentDescription}
           </CardText>
         </Card>
       </div>
@@ -30,17 +26,13 @@ class IncidentSummary extends Component {
 
 IncidentSummary.defaultProps = {
   incidentSummary: {
+    public_incident_description: '',
   },
 };
 
 IncidentSummary.propTypes = {
   incidentSummary: PropTypes.shape({
-    id: PropTypes.number,
-    user_name: PropTypes.string,
-    updated: PropTypes.bool,
-    incident_date: PropTypes.string,
-    incident_type: PropTypes.arrayOf(PropTypes.string),
-    location: PropTypes.string,
+    public_incident_description: PropTypes.string,
   }),
 };
 

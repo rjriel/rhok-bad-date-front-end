@@ -35,7 +35,7 @@ const stepContainerStyles = {
 const columnStyle = {
   maxWidth: '45%',
   float: 'left',
-  margin: '5px'
+  margin: '5px',
 };
 
 const buttonStyles = {
@@ -47,6 +47,13 @@ const buttonStyles = {
 
 const headerStyles = {
   margin: '10px',
+};
+
+const successStyle = {
+  margin: 10,
+  fontSize: 72,
+  width: 72,
+  color: 'green',
 };
 
 const types = [
@@ -76,7 +83,6 @@ class Create extends Component {
     errorMessage: '',
     currentView: 0,
     loading: false,
-    complete: false,
     dateTime: {
       date: initialDate,
       time: 0,
@@ -132,10 +138,7 @@ class Create extends Component {
     const current = this.state.currentView;
     const totalSteps = _.keys(incidentViews).length;
     if (current === totalSteps - 1) {
-      this.state.complete = true;
       this.submitIncident();
-    } else {
-      this.state.complete = false;
     }
 
     if (current === totalSteps - 1) return;
@@ -146,13 +149,6 @@ class Create extends Component {
 
   setPrevious = () => {
     const current = this.state.currentView;
-    const totalSteps = _.keys(incidentViews).length;
-    if (current === totalSteps - 1) {
-      this.state.complete = true;
-    } else {
-      this.start.complete = false;
-    }
-
     if (current === 0) return;
     this.setState({
       currentView: current - 1,
@@ -439,7 +435,7 @@ class Create extends Component {
   };
 
   renderIncidentOther = () => {
-    const { currentView, loading, incident: { extra_details } } = this.state;
+    const { currentView, loading, incident: { extra_details: extraDetails } } = this.state;
     if (currentView !== incidentViews.OTHER) return null;
     return currentView === incidentViews.OTHER &&
       <div id="other">
@@ -447,9 +443,9 @@ class Create extends Component {
         <TextField
           hintText="Other details"
           floatingLabelText="Other details"
-          multiLine={true}
+          multiLine
           rows={4}
-          value={extra_details}
+          value={extraDetails}
           onChange={(event, value) => { this.incidentUpdate('extra_details', value); }}
         />
         <Checkbox
@@ -457,7 +453,7 @@ class Create extends Component {
           style={{ marginTop: 20 }}
         />
         { loading &&
-        <div id="spinner" className={this.state.loading ? '' : hideStyle} style={{ marginTop: 20, textAlign: 'center' }}>
+        <div id="spinner" style={{ marginTop: 20, textAlign: 'center' }}>
           <CircularProgress />
         </div>
         }
@@ -467,24 +463,36 @@ class Create extends Component {
   renderSuccess = () => {
     const { currentView } = this.state;
     if (currentView !== incidentViews.SUCCESS) return null;
-    return currentView === incidentViews.SUCCESS && 
-    <div id="success" style={{textAlign: 'center'}}>
+    return currentView === incidentViews.SUCCESS &&
+    <div id="success" style={{ textAlign: 'center' }}>
       Successfully Reported
-      <br/>
-      <FontIcon className="material-icons" style={{ margin: 10, fontSize: 72, width: 72, color: 'green' }}>check circle</FontIcon>
+      <br />
+      <FontIcon
+        className="material-icons"
+        style={successStyle}
+      >check circle
+      </FontIcon>
       <p>Thank you for helping make our community safer.</p>
     </div>;
   };
 
   render() {
-    const { currentView, complete, errorMessage } = this.state;
+    const { currentView, errorMessage } = this.state;
     const totalSteps = _.keys(incidentViews).length;
     const isLast = currentView === totalSteps - 1;
+    const isFirst = currentView === 0;
+    const invisibleStyle = {
+      visibility: 'hidden',
+    };
+
     const nextText = isLast ? 'Submit' : 'Next';
     return (
       <div style={containerStyle}>
         <h1 style={headerStyles}>New Incident</h1>
-        {!isLast && <div>Step {currentView + 1} of {totalSteps}</div>}
+        {
+          (currentView !== incidentViews.SUCCESS) &&
+          <div>Step {currentView + 1} of {totalSteps}</div>
+        }
 
         <div style={stepContainerStyles}>
           {this.renderIncidentType()}
@@ -497,9 +505,14 @@ class Create extends Component {
         </div>
         { errorMessage && <div style={errorStyles}>{errorMessage}</div>}
         {
-          !complete &&
+          (currentView !== incidentViews.SUCCESS) &&
           <div style={buttonStyles}>
-            <RaisedButton primary onClick={() => this.setPrevious()} >Back</RaisedButton>
+            <RaisedButton
+              style={isFirst && invisibleStyle}
+              primary
+              onClick={() => this.setPrevious()}
+            >Back
+            </RaisedButton>
             <RaisedButton primary onClick={() => this.setNext()}>{nextText}</RaisedButton>
           </div>
         }

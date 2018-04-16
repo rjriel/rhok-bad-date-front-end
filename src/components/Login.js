@@ -9,7 +9,8 @@ const buttonStyle = {
 
 const linkStyle = {
   color: '#0097a7',
-  textDecorationLine: 'none'
+  textDecorationLine: 'none',
+  float: 'left',
 };
 
 const contactStyle = {
@@ -26,7 +27,7 @@ const contactStyle2 = {
   margin: 0,
   marginLeft: 35,
   marginTop: -25,
-}
+};
 
 const containerStyles = {
   textAlign: 'center',
@@ -117,7 +118,7 @@ class Login extends Component {
           label="Sign Up"
         />
         <div style={{ marginTop: 50 }}>
-          <p><a href="tel:16135622333"><FontIcon className="material-icons" style={linkStyle} style={{ float: 'left' }}>phone</FontIcon></a></p>
+          <p><a href="tel:16135622333"><FontIcon className="material-icons" style={linkStyle} >phone</FontIcon></a></p>
           <p style={contactStyle}>
             Need counselling support?
             <br />
@@ -125,9 +126,11 @@ class Login extends Component {
           </p>
         </div>
         <div style={{ marginTop: 10, float: 'left' }}>
-        <p><a href="tel:16136882017"><FontIcon className="material-icons" style={linkStyle} style={{ float: 'left' }}>phone</FontIcon></a></p>
+          <p>
+            <a href="tel:16136882017"><FontIcon className="material-icons" style={linkStyle} >phone</FontIcon></a>
+          </p>
           <p style={contactStyle2}>
-            Brigid's Place.
+            {'Brigid\'s Place.'}
             <br />
             (Open 24 hours, 7 days/week)
           </p>
