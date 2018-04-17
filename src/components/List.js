@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import SortDropDownMenu from './SortDropDownMenu';
-import IncidentSummary from './IncidentSummary';
+import BasicIncident from './BasicIncident';
 import FullIncident from './FullIncident';
 
 const listStyle = {
@@ -16,8 +16,12 @@ const listStyle = {
 
 const incidentResultStyle = {
   overflow: 'auto',
-  maxHeight: '300px',
+  maxHeight: '60vh',
 
+};
+
+const headerStyle = {
+  maxHeight: '24vh',
 };
 
 const separatorStyle = {
@@ -104,7 +108,7 @@ class List extends Component {
     });
     return filtered.map((incident) => {
       return (
-        <div key={incident.id}>
+        <div key={incident.incident_id}>
           <Divider style={horizontalRuleStyle} /><FullIncident fullIncident={incident} />
         </div>
       );
@@ -118,8 +122,8 @@ class List extends Component {
     });
     return filtered.map((incident) => {
       return (
-        <div key={incident.id}>
-          <Divider style={horizontalRuleStyle} /><IncidentSummary incidentSummary={incident} />
+        <div key={Math.random()}>
+          <Divider style={horizontalRuleStyle} /><BasicIncident basicIncident={incident} />
         </div>
       );
     });
@@ -129,7 +133,7 @@ class List extends Component {
     // const { } = this.state;
     return (
       <div style={listStyle}>
-        <div>
+        <div style={headerStyle}>
           <h1>Reported Incidents</h1>
           <div>
             <span style={searchLabelStyle}>Search:</span>

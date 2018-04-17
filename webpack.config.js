@@ -79,6 +79,7 @@ const config = {
     }),
     new CopyWebpackPlugin([
       { from: 'src/images', to: '' },
+      { from: 'styles', to: '' },
     ]),
   ],
 

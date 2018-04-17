@@ -2,7 +2,7 @@ import { Card, CardText } from 'material-ui';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class IncidentSummary extends Component {
+class BasicIncident extends Component {
   constructor(props) {
     super(props);
 
@@ -10,7 +10,8 @@ class IncidentSummary extends Component {
   }
 
   render() {
-    const { public_incident_description: publicIncidentDescription } = this.props.incidentSummary;
+    console.log(this.props.basicIncident);
+    const { public_incident_description: publicIncidentDescription } = this.props.basicIncident;
 
     return (
       <div >
@@ -24,16 +25,16 @@ class IncidentSummary extends Component {
   }
 }
 
-IncidentSummary.defaultProps = {
-  incidentSummary: {
+BasicIncident.defaultProps = {
+  basicIncident: {
     public_incident_description: '',
   },
 };
 
-IncidentSummary.propTypes = {
-  incidentSummary: PropTypes.shape({
+BasicIncident.propTypes = {
+  basicIncident: PropTypes.shape({
     public_incident_description: PropTypes.string,
   }),
 };
 
-export default IncidentSummary;
+export default BasicIncident;

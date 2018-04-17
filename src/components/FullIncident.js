@@ -2,111 +2,121 @@ import { Card, CardHeader, CardText } from 'material-ui';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-// const showOnlyMyIncidentsCheckboxStyle = {
-//   marginTop: '17px',
-// };
+const rowLabelStyle = {
+  color: 'rgb(0, 188, 212, 0.8)',
+};
 
-const labelStyle = {
-  fontWeight: 700,
-  marginRight: '10px',
+const rowValueStyle = {
+  paddingLeft: '30px',
 };
 
 const breakStyle = {
   marginTop: '15px',
 };
 
-const spaceEvenlyStyle = {
-  display: 'flex',
-  direction: 'row',
-  justifyContent: 'space-between',
-};
-
 class FullIncident extends Component {
+  static renderCar(car) {
+    return (
+      <React.Fragment>
+        {FullIncident.renderRow('Make', car.make)}
+        {FullIncident.renderRow('Model', car.model)}
+        {FullIncident.renderRow('Type', car.type)}
+        {FullIncident.renderRow('Plate', car.plate_number)}
+        {FullIncident.renderRow('Plate province', car.plate_province)}
+        {FullIncident.renderEmptyRow()}
+      </React.Fragment>
+    );
+  }
+  static renderOffender(offender) {
+    return (
+      <React.Fragment>
+        {FullIncident.renderRow('Build', offender.build)}
+        {FullIncident.renderRow('Race/skin', offender.skin_colour)}
+        {FullIncident.renderRow('Height', offender.height)}
+        {FullIncident.renderRow('Weight', offender.weight)}
+        {FullIncident.renderRow('Age', offender.age)}
+        {FullIncident.renderRow('Hair colour', offender.hair_colour)}
+        {FullIncident.renderRow('Facial hair', offender.facial_hair)}
+        {FullIncident.renderRow('Tattoos', offender.tattoos)}
+        {FullIncident.renderEmptyRow()}
+      </React.Fragment>
+    );
+  }
+  static renderRow(label, value) {
+    return (
+      <React.Fragment>
+        {value &&
+        <tr>
+          <td style={rowLabelStyle}>{label}</td>
+          <td style={rowValueStyle}>{value}</td>
+        </tr>
+      }
+      </React.Fragment>
+    );
+  }
+  static renderEmptyRow() {
+    return (
+      <React.Fragment>
+        {
+          <tr>
+            <td style={rowLabelStyle}><br /></td>
+            <td style={rowValueStyle}><br /></td>
+          </tr>
+        }
+      </React.Fragment>
+    );
+  }
+  static buildSubtitle(incidentDate, location) {
+    const strDate = (incidentDate ? (new Date(incidentDate)).toLocaleDateString('en-US') : '');
+    const separator = strDate ? '        ' : '';
+    const strLocation = location ? location : '';
+    return `${strDate}${separator}${strLocation}`;
+  }
   constructor(props) {
     super(props);
 
     this.state = {};
   }
-
   render() {
-    console.log('--------------', this.props.fullIncident);
+    console.log('fullIncident:', this.props.fullIncident);
     const {
       incidentType,
-      incident_date: incidentDate,
+      incidentDate,
       incident_description: incidentDescription,
       car,
       offender,
+      location,
+      extra_details,
     } = this.props.fullIncident;
 
     return (
       <div >
         <Card>
           <CardHeader
-            title={incidentType ? incidentType.join() : 'n/a'}
-            subtitle={incidentDate}
+            title={incidentType ? incidentType.join(', ') : 'not available'}
+            subtitle={FullIncident.buildSubtitle(incidentDate, location)}
             actAsExpander
             showExpandableButton
           />
           <CardText expandable>
-            { car &&
-              [
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Plate Number:</span>
-                  <span>{car.plate_number}</span>
-                </div>,
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Make:</span>
-                  <span>{car.make}</span>
-                </div>,
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Model:</span>
-                  <span>{car.model}</span>
-                </div>,
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Type:</span>
-                  <span>{car.type}</span>
-                </div>,
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Details:</span>
-                  <span>{car.extra_details}</span>
-                </div>,
-                <div style={breakStyle} />,
-              ]
+            <table>
+              <tbody>
+                { car &&
+                  FullIncident.renderCar(car)
+                }
+                { offender &&
+                  FullIncident.renderOffender(offender)
+                }
+              </tbody>
+            </table>
+
+            { incidentDescription &&
+              <div style={breakStyle}>{incidentDescription}</div>
             }
 
-            {offender &&
-              [
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Name:</span>
-                  <span>{offender.name}</span>
-                </div>,
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Age:</span>
-                  <span>{offender.age}</span>
-                </div>,
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Gender:</span>
-                  <span>{offender.gender}</span>
-                </div>,
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Height:</span>
-                  <span>{offender.height}</span>
-                </div>,
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Weight:</span>
-                  <span>{offender.weight}</span>
-                </div>,
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Skin Colour:</span>
-                  <span>{offender.skin_colour}</span>
-                </div>,
-                <div style={spaceEvenlyStyle}>
-                  <span style={labelStyle}>Contact details:</span>
-                  <span>{offender.contact_details}</span>
-                </div>,
-              ]
+            { extra_details &&
+              <div style={breakStyle}>{extra_details}</div>
             }
-            <div style={breakStyle}>{incidentDescription}</div>
           </CardText>
         </Card>
       </div>
@@ -120,8 +130,9 @@ FullIncident.defaultProps = {
 
 FullIncident.propTypes = {
   fullIncident: PropTypes.shape({
-    incidentType: PropTypes.string,
-    incident_date: PropTypes.string,
+    location: PropTypes.string,
+    incidentType: PropTypes.arrayOf(PropTypes.string),
+    incidentDate: PropTypes.string,
     incident_description: PropTypes.string,
     car: PropTypes.objectOf(PropTypes.string),
     offender: PropTypes.objectOf(PropTypes.string),
