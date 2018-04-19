@@ -314,6 +314,7 @@ class Create extends Component {
     if (currentView !== incidentViews.LOCATION) return null;
     return (
       <div id="location">
+        <div>Where did this incident occur?</div>
         <TextField
           value={location}
           hintText="Enter location"

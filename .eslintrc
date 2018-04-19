@@ -9,6 +9,7 @@
       "specialLink": [ "to", "hrefLeft", "hrefRight" ],
       "aspects": [ "noHref", "invalidHref", "preferButton" ]
     }],
-    "arrow-body-style": 0
+    "arrow-body-style": 0,
+    "linebreak-style": 0
   }
 }

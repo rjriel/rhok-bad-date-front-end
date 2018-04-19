@@ -25,20 +25,22 @@ const BottomNav = ({ currentView, viewSelector, loggedIn }) => {
         icon={homeIcon}
         onClick={() => { viewSelector(views.HOME); }}
       />
+      {loggedIn &&
       <BottomNavigationItem
         label="Create"
         icon={createIcon}
         style={null}
-        disabled={!loggedIn}
         onClick={() => { viewSelector(views.CREATE); }}
       />
+      }
+      {loggedIn &&
       <BottomNavigationItem
         label="List"
         icon={listIcon}
         color="#FF0000"
-        disabled={!loggedIn}
         onClick={() => { viewSelector(views.LIST); }}
       />
+      }
       <BottomNavigationItem
         label="Resources"
         icon={resourcesIcon}

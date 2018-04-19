@@ -7,16 +7,19 @@ import BasicIncident from './BasicIncident';
 import FullIncident from './FullIncident';
 
 const listStyle = {
-  margin: '30px',
+  width: '90vw',
+  height: '90vh',
+  maxWidth: '600px',
+  alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'start',
-  height: '90vh',
 };
 
 const incidentResultStyle = {
   overflow: 'auto',
   maxHeight: '60vh',
+  width: '100%',
 
 };
 
@@ -30,7 +33,7 @@ const separatorStyle = {
 };
 
 const horizontalRuleStyle = {
-  marginTop: '30px',
+  marginTop: '20px',
 };
 
 const searchLabelStyle = {
@@ -134,7 +137,7 @@ class List extends Component {
     return (
       <div style={listStyle}>
         <div style={headerStyle}>
-          <h1>Reported Incidents</h1>
+          <h1 style={{ marginTop: 0, marginBottom: 5 }}>Reported Incidents</h1>
           <div>
             <span style={searchLabelStyle}>Search:</span>
             <TextField

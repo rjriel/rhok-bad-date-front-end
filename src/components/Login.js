@@ -93,6 +93,12 @@ class Login extends Component {
             id="username"
             value={this.state.username}
             onChange={(event) => { this.setState({ username: event.target.value }); }}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') {
+                loginCB({ username, password });
+                event.preventDefault();
+              }
+            }}
             placeholder="Enter your username"
           />
         </div>
@@ -103,6 +109,12 @@ class Login extends Component {
             type="password"
             value={this.state.password}
             onChange={(event) => { this.setState({ password: event.target.value }); }}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') {
+                loginCB({ username, password });
+                event.preventDefault();
+              }
+            }}
           />
         </div>
         <RaisedButton
@@ -132,7 +144,7 @@ class Login extends Component {
           <p style={contactStyle2}>
             {'Brigid\'s Place.'}
             <br />
-            (Open 24 hours, 7 days/week)
+            <a href="tel:16136882017" style={linkStyle}>(Open 24 hours, 7 days/week)</a>
           </p>
         </div>
       </div>

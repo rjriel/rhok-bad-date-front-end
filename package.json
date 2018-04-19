@@ -54,6 +54,9 @@
   "eslintConfig": {
     "globals": {
       "document": true
+    },
+    "rules": {
+      "linebreak-style": 0
     }
   }
 }

@@ -16,15 +16,17 @@ const appStyles = {
   margin: 0,
   padding: 0,
   background: `linear-gradient(
-    rgba(0, 0, 0, 0.6), 
-    rgba(0, 0, 0, 0.6)
+    rgba(0, 0, 0, 0.5), 
+    rgba(0, 0, 0, 0.8)
   ), url(${imageUrl})`,
   backgroundSize: 'cover',
+  backgroundRepeat: 'none',
+  backgroundPosition: 'center center',
 };
 
 const containerStyles = {
   display: 'flex',
-  flexDirection: 'colum',
+  flexDirection: 'column',
   alignItems: 'center',
   height: '100%',
   justifyContent: 'center',
